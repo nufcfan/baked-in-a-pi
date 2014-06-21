@@ -6,5 +6,10 @@
   "author": {
     "name": "Yannis",
     "email": ""
-  }
+  },
+  "dependencies": {
+    "socket.io": "~1.0.6",
+    "socket.io-stream": "~0.5.3",
+    "ds18x20": "~0.1.1"
+   }
 }
