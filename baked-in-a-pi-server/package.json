@@ -1,0 +1,10 @@
+{
+  "name": "baked_in_a_pi_server",
+  "version": "0.0.0",
+  "description": "baked-in-a-pi-server",
+  "main": "server.js",
+  "author": {
+    "name": "Yannis",
+    "email": ""
+  }
+}

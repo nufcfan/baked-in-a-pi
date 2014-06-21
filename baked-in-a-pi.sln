@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "baked-in-a-pi-server", "baked-in-a-pi-server\baked-in-a-pi-server.njsproj", "{1DB65A7D-14AA-40A3-B200-53770575697E}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "baked-in-a-pi-client", "baked-in-a-pi-client\baked-in-a-pi-client.njsproj", "{0AB25A2B-A2CC-4EC5-B12D-DEB8E5C91DA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DB65A7D-14AA-40A3-B200-53770575697E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DB65A7D-14AA-40A3-B200-53770575697E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DB65A7D-14AA-40A3-B200-53770575697E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DB65A7D-14AA-40A3-B200-53770575697E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AB25A2B-A2CC-4EC5-B12D-DEB8E5C91DA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AB25A2B-A2CC-4EC5-B12D-DEB8E5C91DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AB25A2B-A2CC-4EC5-B12D-DEB8E5C91DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AB25A2B-A2CC-4EC5-B12D-DEB8E5C91DA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
