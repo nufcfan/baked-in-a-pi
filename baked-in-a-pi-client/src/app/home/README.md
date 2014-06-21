@@ -34,8 +34,7 @@ specified, as shown below.
 ```js
 angular.module( 'ngBoilerplate.home', [
   'ui.router',
-  'titleService',
-  'plusOne'
+  'titleService'
 ])
 ```
 
