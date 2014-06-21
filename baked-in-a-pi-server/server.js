@@ -7,13 +7,13 @@ var clients = io
     .of('/temperatures')
     .on('connection', function (socket) {
         var temperatures = setInterval(function () {
-            ds18b20.get(function (err, temp) {
+            ds18b20.getAll(function (err, temp) {
                 if (err) throw err;
-                clients.emit(temp);
+                clients.emit("temperature", { celcius: temp[0] });
             });
         },1000);
 
-    socket.on('disconnect', function () {
-        clearInterval(temperatures);
-    });
+        socket.on('disconnect', function () {
+            clearInterval(temperatures);
+        });
 });
