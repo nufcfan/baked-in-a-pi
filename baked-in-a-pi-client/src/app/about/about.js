@@ -1,4 +1,4 @@
-angular.module( 'ngBoilerplate.about', [
+angular.module( 'baked-in-a-pi.about', [
   'ui.router',
   'placeholders',
   'ui.bootstrap'

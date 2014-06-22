@@ -12,15 +12,9 @@
  * The dependencies block here is also where component dependencies should be
  * specified, as shown below.
  */
-angular.module( 'ngBoilerplate.home', [
+angular.module('baked-in-a-pi.home', [
   'ui.router'
 ])
-
-/**
- * Each section or module of the site can also have its own routes. AngularJS
- * will handle ensuring they are all available at run-time, but splitting it
- * this way makes each module more "self-contained".
- */
 .config(function config( $stateProvider ) {
   $stateProvider.state( 'home', {
     url: '/home',
@@ -37,8 +31,20 @@ angular.module( 'ngBoilerplate.home', [
 /**
  * And of course we define a controller for our route.
  */
-.controller( 'HomeCtrl', function HomeController( $scope ) {
+.controller('HomeCtrl', function HomeController($scope, socket) {    
+    socket.on('temperature', function(data) {
+        console.log(JSON.stringify(data));
+        var sensor = { };
+        for(var key in data){
+            if(data.hasOwnProperty(key)) {
+                sensor.key = key;
+                sensor.value = data[key];
+                break;
+            }
+        }
+        console.log(sensor.value);
+        $scope.celcius = sensor.value;
+    });
 })
 
 ;
-

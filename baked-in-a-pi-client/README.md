@@ -1,4 +1,4 @@
-# [ngBoilerplate](http://joshdmiller.github.com/baked-in-a-pi) [![Build Status](https://api.travis-ci.org/nufcfan/baked-in-a-pi.png?branch=v0.3.2-release)](https://travis-ci.org/nufcfan/baked-in-a-pi)
+# [baked-in-a-pi](http://joshdmiller.github.com/baked-in-a-pi) [![Build Status](https://api.travis-ci.org/nufcfan/baked-in-a-pi.png?branch=v0.3.2-release)](https://travis-ci.org/nufcfan/baked-in-a-pi)
 
 An opinionated kickstarter for [AngularJS](http://angularjs.org) projects.
 
@@ -23,10 +23,10 @@ Happy hacking!
 
 ## Purpose
 
-`ngBoilerplate` is designed to make life easy by providing a basic framework
+`baked-in-a-pi` is designed to make life easy by providing a basic framework
 with which to kickstart AngularJS projects. It contains a best-practice
 directory structure to ensure code reusability and maximum scalability.
-ngBoilerplate also comes prepackaged with the most popular design frameworks
+baked-in-a-pi also comes prepackaged with the most popular design frameworks
 around: [Twitter Bootstrap](http://getbootstrap.com),
 [Angular UI](http://angular-ui.github.io),
 [Angular Bootstrap](http://angular-ui.github.io/bootstrap),
@@ -37,8 +37,8 @@ All you have to do is clone it and start coding!
 
 ## Philosophy
 
-The principal goal of `ngBoilerplate` is to set projects up for long-term
-success.  So `ngBoilerplate` tries to follow best practices everywhere it can.
+The principal goal of `baked-in-a-pi` is to set projects up for long-term
+success.  So `baked-in-a-pi` tries to follow best practices everywhere it can.
 These are:
 
 - Properly orchestrated modules to encourage drag-and-drop component re-use.
@@ -56,9 +56,9 @@ These are:
 - Well-documented, to show new developers *why* things are set up the way they
   are.
 - It should be responsive to evidence. Community feedback is therefore crucial
-  to the success of `ngBoilerplate`.
+  to the success of `baked-in-a-pi`.
 
-But `ngBoilerplate` is not an example of an AngularJS app: this is a
+But `baked-in-a-pi` is not an example of an AngularJS app: this is a
 kickstarter. If you're looking for an example of what a complete, non-trivial
 AngularJS app that does something real looks like, complete with a REST backend
 and authentication and authorization, then take a look at
@@ -123,7 +123,7 @@ learn more.
 ### Detailed Installation
 
 This section provides a little more detailed understanding of what goes into
-getting `ngBoilerplate` up and running. Though `ngBoilerplate` is really simple
+getting `baked-in-a-pi` up and running. Though `baked-in-a-pi` is really simple
 to use, it might help to have an understanding of the tools involved here, like
 Node.js and Grunt and Bower. If you're completely new to highly organized,
 modern JavaScript development, take a few short minutes to read [this overview
@@ -131,7 +131,7 @@ of the tools](tools.md) before continuing with this section.
 
 Okay, ready to go? Here it is:
 
-`ngBoilerplate` uses [Grunt](http://gruntjs.org) as its build system, so
+`baked-in-a-pi` uses [Grunt](http://gruntjs.org) as its build system, so
 [Node.js](http://nodejs.org) is required. Also, Grunt by default no longer comes
 with a command-line utility and Karma and Bower must end up in your global path
 for the build system to find it, so they must be installed independently. Once
@@ -163,7 +163,7 @@ This will read the `dependencies` (empty by default) and the `devDependencies`
 (which contains our build requirements) from `package.json` and install
 everything needed into a folder called `node_modules/`.
 
-There are many Bower packages used by `ngBoilerplate`, like Twitter Bootstrap
+There are many Bower packages used by `baked-in-a-pi`, like Twitter Bootstrap
 and Angular UI, which are listed in `bower.js`. To install them into the
 `vendor/` directory, simply run:
 
@@ -184,7 +184,7 @@ application (or we download it from a different computer), we can simply run the
 `bower install` command as above and all our dependencies will be installed for
 us. Neat!
 
-Technically, `ngBoilerplate` is now ready to go.
+Technically, `baked-in-a-pi` is now ready to go.
 
 However, prior to hacking on your application, you will want to modify the
 `package.json` file to contain your project's information. Do not remove any
@@ -240,7 +240,7 @@ $ grunt
 The best way to learn about the build system is by familiarizing yourself with
 Grunt and then reading through the heavily documented build script,
 `Gruntfile.js`. But you don't need to do that to be very productive with
-`ngBoilerplate`. What follows in this section is a quick introduction to the
+`baked-in-a-pi`. What follows in this section is a quick introduction to the
 tasks provided and should be plenty to get you started.
 
 The driver of the process is the `delta` multi-task, which watches for file
@@ -314,7 +314,7 @@ expected, open the `bin/index.html` file in your browser. Voila!
 
 ### Live Reload!
 
-`ngBoilerplate` also includes [Live Reload](http://livereload.com/), so you no
+`baked-in-a-pi` also includes [Live Reload](http://livereload.com/), so you no
 longer have to refresh your page after making changes! You need a Live Reload
 browser plugin for this:
 
@@ -324,7 +324,7 @@ browser plugin for this:
 - Internet Explorer - Surely you jest.
 
 Note that if you're using the Chrome version with `file://` URLs (as is the
-default with `ngBoilerplate`) you need to tell Live Reload to allow it. Go to
+default with `baked-in-a-pi`) you need to tell Live Reload to allow it. Go to
 `Menu -> Tools -> Extensions` and check the "Allow access to file URLs" box next
 to the Live Reload plugin.
 

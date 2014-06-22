@@ -1,7 +1,7 @@
 {
   "author": "nufcfan",
   "name": "baked-in-a-pi-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/nufcfan/baked-in-a-pi",
   "licenses": {
     "type": "MIT",
@@ -12,7 +12,8 @@
     "type": "git",
     "url": "git@github.com:nufcfan/baked-in-a-pi.git"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-less": "~0.11.0",
