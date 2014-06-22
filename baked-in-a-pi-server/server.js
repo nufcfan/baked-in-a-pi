@@ -12,7 +12,7 @@ var clients = io
                 console.log(JSON.stringify(temp));
                 clients.emit("temperature", temp);
             });
-        },1000);
+        }, 10000);
 
         socket.on('disconnect', function () {
             clearInterval(temperatures);
