@@ -1,6 +1,6 @@
 {
   "name": "baked-in-a-pi",
-  "version": "0.3.2",
+  "version": "0.0.1",
   "devDependencies": {
     "angular": "~1.2",
     "angular-mocks": "~1.2",
@@ -8,7 +8,9 @@
     "angular-bootstrap": "~0.10.0",
     "angular-ui-router": "~0.2",
     "socket.io-client": "~1.0.6",
-    "angular-socket-io": "~0.6.0"
+    "angular-socket-io": "~0.6.0",
+	"n3-line-chart": "~1.0.8",
+	"angular-momentjs": "0.1.8"
   },
   "dependencies": {}
 }

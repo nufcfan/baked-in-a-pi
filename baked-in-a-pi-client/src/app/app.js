@@ -1,4 +1,5 @@
-angular.module( 'baked-in-a-pi', [
+angular.module('baked-in-a-pi', [    
+   'n3-line-chart',
   'templates-app',
   'templates-common',
   'btford.socket-io',
@@ -16,7 +17,7 @@ angular.module( 'baked-in-a-pi', [
 .controller('AppCtrl', function AppCtrl ($scope, $location) {
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
     if ( angular.isDefined( toState.data.pageTitle ) ) {
-      $scope.pageTitle = toState.data.pageTitle + ' | baked-in-a-pi' ;
+      $scope.pageTitle = toState.data.pageTitle + ' | Baked in a Pi' ;
     }
   });
 })

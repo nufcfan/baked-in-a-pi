@@ -61,11 +61,15 @@ module.exports = {
    * recommended that you use wildcards.
    */
   vendor_files: {
-      js: [
-       'vendor/socket.io-client/socket.io.js',
+      js: [      
+	  'vendor/socket.io-client/socket.io.js',
+	  'vendor/moment/moment.js',
       'vendor/angular/angular.js',
+      'vendor/d3/d3.js',
+      'vendor/n3-line-chart/dist/line-chart.js',
+	  'vendor/angular-momentjs/angular-momentjs.js',
       'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-      'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
+	  'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
       'vendor/angular-ui-router/release/angular-ui-router.js',
       'vendor/angular-ui-utils/modules/route/route.js',
       'vendor/angular-socket-io/socket.min.js'
