@@ -37,7 +37,9 @@ angular.module('baked-in-a-pi.home', [
 	$scope.data = [];
 	$scope.options = {
         axes: {
-            x: {key: "x", labelFunction: function (v) { return moment().format("DD-MM-YYYY"); }, type: "date"},
+            x: {key: "x", labelFunction: function (v) { 
+					return moment(v).format("HH:mm");					
+				}},
             y: {min: 18, max: 33}
         },
         series: [{

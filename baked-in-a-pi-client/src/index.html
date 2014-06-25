@@ -5,7 +5,7 @@
     <title ng-bind="pageTitle"></title>
 
     <!-- social media tags -->
-    <meta name="twitter:card" content="summary">
+    <!-- <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@joshdmiller">
     <meta name="twitter:title" content="baked-in-a-pi">
     <meta name="twitter:description" content="Non-Trivial AngularJS Made Easy: Everything you need to kickstart AngularJS projects: a best-practice directory structure, an intelligent build system, and the best web design libraries around.">
@@ -15,7 +15,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://bit.ly/baked-in-a-pi" />
     <meta property="og:image" content="https://a248.e.akamai.net/assets.github.com/images/modules/logos_page/Octocat.png?1366128846" />
-    <meta property="og:description" content="Non-Trivial AngularJS Made Easy: Everything you need to kickstart AngularJS projects: a best-practice directory structure, an intelligent build system, and the best web design libraries around.">
+    <meta property="og:description" content="Non-Trivial AngularJS Made Easy: Everything you need to kickstart AngularJS projects: a best-practice directory structure, an intelligent build system, and the best web design libraries around."> -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,17 +28,12 @@
     <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
 
-    <!-- it's stupid to have to load it here, but this is for the +1 button -->
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
-      { "parsetags": "explicit" }
-    </script>
   </head>
   <body>
     <div class="container">
       <div class="navbar navbar-default">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" ng-init="menuCollapsed = true"
-            ng-click="menuCollapsed = ! menuCollapsed">
+          <button type="button" class="navbar-toggle" ng-init="menuCollapsed = true" ng-click="menuCollapsed = ! menuCollapsed">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -47,7 +42,7 @@
           <div class="navbar-brand">
             baked-in-a-pi
             <small>
-              <a href="http://github.com/nufcfan/baked-in-a-pi/blob/v<%= version %>-release/CHANGELOG.md">
+              <a href="http://github.com/nufcfan/baked-in-a-pi/">
                 v<%= version %>
               </a>
             </small>
@@ -66,25 +61,7 @@
                 <i class="fa fa-info-circle"></i>
                 What is it?
               </a>
-            </li>
-            <li>
-              <a href="https://github.com/nufcfan/baked-in-a-pi#readme">
-                <i class="fa fa-book"></i>
-                Read the Docs
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/nufcfan/baked-in-a-pi">
-                <i class="fa fa-github-alt"></i>
-                Github
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/nufcfan/baked-in-a-pi/issues">
-                <i class="fa fa-comments"></i>
-                Support
-              </a>
-            </li>
+            </li>            
           </ul>
         </div>
       </div>
@@ -94,20 +71,9 @@
 
     <footer class="footer">
       <div class="container">
-        <div class="footer-inner">
-          <ul class="social">
-            <li><a target="_blank" href="http://gplus.to/joshdmiller"><i class="fa fa-google-plus-sign"></i></a></li>
-            <li><a target="_blank" href="http://twitter.com/joshdmiller"><i class="fa fa-twitter-sign"></i></a></li>
-            <li><a target="_blank" href="http://linkedin.com/in/joshdmiller"><i class="fa fa-linkedin-sign"></i></a></li>
-            <li><a target="_blank" href="http://github.com/nufcfan/baked-in-a-pi"><i class="fa fa-github-sign"></i></a></li>
-          </ul>
-          
-
+        <div class="footer-inner">          
           <p>
-            (c) 2013 <a href="http://www.joshdavidmiller.com">Josh David Miller</a>. 
-            <a href="http://github.com/nufcfan/baked-in-a-pi/fork_select">Fork this</a>
-            to kickstart your next project.
-            <br />
+            &copy; 2014 nufcfan             
             baked-in-a-pi is based on
             <a href="http://www.angularjs.org">AngularJS</a>,
             <a href="http://getbootstrap.com">Bootstrap</a>, 
