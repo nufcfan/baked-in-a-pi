@@ -5,7 +5,7 @@ var ds18b20 = require('ds18x20');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-mongoose.connect('mongodb://' + dbConfig.username + ':' + dbConfig.password + '@novus.modulusmongo.net:27017/begA9dox');
+mongoose.connect('mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' + connectionString + '');
 
 var ds180b20Schema = new Schema({
 	sensorId: String,
