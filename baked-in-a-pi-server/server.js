@@ -5,7 +5,11 @@ var ds18b20 = require('ds18x20');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-mongoose.connect('mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' + dbConfig.connectionString);
+var connectionString = 'mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' + dbConfig.connectionString;
+
+console.log('Connectiong to :' + connectionString);
+mongoose.connect(connectionString);
+console.log('Connected ...');
 
 var ds180b20Schema = new Schema({
 	sensorId: String,
@@ -15,15 +19,16 @@ var ds180b20Schema = new Schema({
 });
 
 var DS180B20Sensor = mongoose.model('DS180B20Sensor', ds180b20Schema);
-//var address = '/sys/bus/w1/devices/28-000005cc39f1/w1_slave';
 
 var temperatures = setInterval(function () {
+	console.log('Reading temperarure sensors ...');
 	ds18b20.getAll(function (err, temp) {
 		if (err) throw err;				
 		for(var prop in temp) {
 			var ds180b20Sensor = new DSDS180B20Sensor({ sensorId: prop, description: "Canopy", reading: temp });
+			console.log('Saving ...')
 			ds180b20Sensor.save(function(err) {
-				console.log("Logged to DB: " + prop + ": " + temp);
+				console.log("Logged to DB: " + prop + ": " + JSON.stringify(ds180b20Sensor));
 			});
 		}
 	});
