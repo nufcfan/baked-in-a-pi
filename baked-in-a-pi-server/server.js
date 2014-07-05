@@ -1,6 +1,7 @@
 ﻿var io = require('socket.io').listen(80);
 var dbConfig = require('./.pwd').db;
 var ds18b20 = require('ds18x20');
+var ldr = require('./ldr.js').ldr;
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -15,6 +16,24 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
 	console.log('Successfully connected!');
 	console.log(M.modelNames());
+});
+
+ldr.start();
+
+ldr.on('started', function(reading){
+	console.log('ldr sensor started');
+});
+
+ldr.on('stopped', function(reading){
+	console.log('ldr sensor stopped');
+});
+
+ldr.on('reading', function(reading){
+	console.log('ldr:' + reading);
+});
+
+ldr.on('lights-off', function() {
+	console.log('lights off!!');
 });
 
 var ds180b20Schema = new Schema({
