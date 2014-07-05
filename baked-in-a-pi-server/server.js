@@ -8,8 +8,14 @@ var Schema = mongoose.Schema;
 var connectionString = 'mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' + dbConfig.connectionString;
 
 console.log('Connectiong to :' + connectionString);
-mongoose.connect(connectionString);
-console.log('Connected ...');
+var M = mongoose.connect(connectionString);
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+	console.log('Successfully connected!');
+	console.log(M.modelNames());
+});
 
 var ds180b20Schema = new Schema({
 	sensorId: String,
