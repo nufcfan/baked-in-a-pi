@@ -72,7 +72,8 @@ var temperatures2 = null;
 
 var clients = io
     .on('connection', function (socket) {
-        
+        console.log('socket connected ...');
+	lightClients++;
 		temperatures2 = temperatures2 || setInterval(function () {
             ds18b20.getAll(function (err, temp) {
                 if (err) throw err;				
@@ -82,5 +83,7 @@ var clients = io
 
         socket.on('disconnect', function () {
             clearInterval(temperatures2);
+		lightClients--;
+		temperatures2 = null;
         });
 	});
