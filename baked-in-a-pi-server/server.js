@@ -1,7 +1,7 @@
 ﻿var io = require('socket.io').listen(80);
 var dbConfig = require('./.pwd').db;
 var ds18b20 = require('ds18x20');
-var ldr = require('./ldr.js').ldr;
+var ldr = require('./ldr.js');
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -18,23 +18,39 @@ db.once('open', function callback () {
 	console.log(M.modelNames());
 });
 
-ldr.start();
+var ldrSensor = new ldr();
 
-ldr.on('started', function(reading){
+ldrSensor.on('started', function(reading){
 	console.log('ldr sensor started');
 });
 
-ldr.on('stopped', function(reading){
+ldrSensor.on('stopped', function(reading){
 	console.log('ldr sensor stopped');
 });
 
-ldr.on('reading', function(reading){
-	console.log('ldr:' + reading);
+var min, max, cnt = 0;
+var readings = [];
+var readingsMax = 20;
+var loggingTemp = false;
+
+ldrSensor.on('read', function(reading){
+	if(!loggingTemp && cnt > 0) {
+		min = min < reading ? min : reading;
+		max = max > reading ? max : reading;
+		readings.push(reading);
+		if(readings.length > readingsMax) {
+			readings.shift();
+		}
+
+		var r = Math.round(readings.reduce(function(sum, a) { return sum + a }, 0) / (readings.length != 0 ? readings.length : 1) / 2);
+		console.log('ldr: ' + r + ' buffer: (' + readings.length + '/' + readingsMax + ')');
+	} else {
+		console.log('skipping ldr reading');
+	}
+	cnt++;
 });
 
-ldr.on('lights-off', function() {
-	console.log('lights off!!');
-});
+ldrSensor.start();
 
 var ds180b20Schema = new Schema({
 	sensorId: String,
@@ -47,13 +63,15 @@ var DS180B20Sensor = mongoose.model('DS180B20Sensor', ds180b20Schema);
 
 var temperatures = setInterval(function () {
 	console.log('Reading temperarure sensors ...');
+	loggingTemp = true;
 	ds18b20.getAll(function (err, temp) {
 		if (err) throw err;				
 		for(var prop in temp) {
-			var ds180b20Sensor = new DSDS180B20Sensor({ sensorId: prop, description: "Canopy", reading: temp });
-			console.log('Saving ...')
+			var ds180b20Sensor = new DS180B20Sensor({ sensorId: prop, description: "Canopy", reading: temp });
+			console.log('Saving ...');
 			ds180b20Sensor.save(function(err) {
 				console.log("Logged to DB: " + prop + ": " + JSON.stringify(ds180b20Sensor));
+				loggingTemp = false;
 			});
 		}
 	});

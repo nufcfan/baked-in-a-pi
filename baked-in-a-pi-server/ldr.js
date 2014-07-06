@@ -4,59 +4,53 @@ var events = require('events');
 var isRunning = false;
 var interval = null;
  
-wpi.setup('gpio');
-wpi.wiringPisetup();
+wpi.wiringPiSetupGpio();
 
 var ldr = function(config) {
 	this.config = config || {
-		pin: 9,
+		pin: 3,
 		pollingInterval: 1000,
-		lightSwitchThreshold = 500
+		lightSwitchThreshold: 150
 	};
- 	events.EventEmitter.call(this);
+	events.EventEmitter.call(this);
 };
 
 ldr.prototype.__proto__ = events.EventEmitter.prototype;
 
-ldr.prototype.readPin = function(pin) { 
-	//reading = 0
+ldr.prototype.readPin = function(pin, callback) { 
+	//console.log('reading pin ' + pin);
+
 	var reading = 0;
 
-	//GPIO.setup(RCpin, GPIO.OUT)        
-	wpi.pinMode(pin, wpi.modes.OUTPUT);
-		
-	//GPIO.output(RCpin, GPIO.LOW)
-	wpi.pullUpDnControl(pin, PUD_DOWN)
+	wpi.pinMode(pin, wpi.modes.OUTPUT);		
+	wpi.pullUpDnControl(pin, wpi.PUD_OFF);
+	wpi.digitalWrite(pin, wpi.LOW);
 
-	//time.sleep(.1)
 	setTimeout(function() {
-		//GPIO.setup(RCpin, GPIO.IN)
 		wpi.pinMode(pin, wpi.modes.INPUT);
-		
-		//# This takes about 1 millisecond per loop cycle
-        //while (GPIO.input(RCpin) == GPIO.LOW):
-        //        reading += 1		
-		while(wpi.digitalRead(pin) == 0) {
+		while(wpi.digitalRead(pin) == 0) {			
 			reading++;
-		};
-		return reading;
-		
+		};				
+		callback(reading);
 	}, 100);
- };
+};
  
 ldr.prototype.start = function() {
+	var self = this;
   	if(!isRunning) {
 		isRunning = true;
-		this.emit('started');
+		self.emit('started');
 		interval = setInterval(function() {
-			var reading = this.readPin(this.config.pin);
-			this.emit('read', reading);
-			if(reading > this.config.lightSwitchThreshold) {
-				// TODO: state change events
-			} else 
-			if(reading < this.config.lightSwitchThreshold) {
-				// TODO: state change events
-			} 			
+			//console.log('calling readPin');
+			self.readPin(self.config.pin, function(reading){ 
+				self.emit('read', reading);
+				if(reading > self.config.lightSwitchThreshold) {
+					// TODO: state change events
+				} else 
+				if(reading < self.config.lightSwitchThreshold) {
+					// TODO: state change events
+				}
+			}); 			
 		}, this.config.pollingInterval);	
 	}
 };
@@ -67,6 +61,9 @@ ldr.prototype.stop = function() {
 		this.emit('stopped');
 		clearInterval(interval);
 		interval = null;
+		wpi.pinMode(pin, wpi.modes.OUTPUT);		
+		wpi.pullUpDnControl(pin, wpi.PUD_OFF);
+		wpi.digitalWrite(pin, wpi.LOW);
 	};
 };
 
