@@ -23,7 +23,7 @@ angular.module('baked-in-a-pi', [
 })
 
 .factory('socket', function (socketFactory) {
-    var myIoSocket = io.connect('http://192.168.1.20:80/temperatures');
+    var myIoSocket = io.connect('http://192.168.1.20:80/');
     return socketFactory({
         ioSocket: myIoSocket
     });

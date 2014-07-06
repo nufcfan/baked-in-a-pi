@@ -33,21 +33,12 @@ var readings = [];
 var readingsMax = 20;
 var loggingTemp = false;
 
-ldrSensor.on('read', function(reading){
-	if(!loggingTemp && cnt > 0) {
-		min = min < reading ? min : reading;
-		max = max > reading ? max : reading;
-		readings.push(reading);
-		if(readings.length > readingsMax) {
-			readings.shift();
-		}
+var lightClients = 0;
 
-		var r = Math.round(readings.reduce(function(sum, a) { return sum + a }, 0) / (readings.length != 0 ? readings.length : 1) / 2);
-		console.log('ldr: ' + r + ' buffer: (' + readings.length + '/' + readingsMax + ')');
-	} else {
-		console.log('skipping ldr reading');
+ldrSensor.on('read', function(reading){
+	if(lightClients > 0) {
+		clients.emit('light-level', reading);
 	}
-	cnt++;
 });
 
 ldrSensor.start();
@@ -77,10 +68,12 @@ var temperatures = setInterval(function () {
 	});
 }, (1 * 60 * 1000));
 
+var temperatures2 = null;
+
 var clients = io
-    .of('/temperatures')
     .on('connection', function (socket) {
-        var temperatures2 = setInterval(function () {
+        
+		temperatures2 = temperatures2 || setInterval(function () {
             ds18b20.getAll(function (err, temp) {
                 if (err) throw err;				
                 clients.emit("temperature", temp);				

@@ -57,6 +57,7 @@ angular.module('baked-in-a-pi.home', [
 			drawLegend: true,
 			drawDots: true
 		};
+		
 		socket.on('temperature', function(data) {
 			var sensor = { };
 			for(var key in data){
@@ -74,6 +75,10 @@ angular.module('baked-in-a-pi.home', [
 			if(sensor.value && sensor.value > 0) {
 				$scope.data.push({x: new Date() , temp: sensor.value });
 			}
+		});
+		
+		socket.on('light-level', function(reading) {			
+			console.log('ldr: ' + reading);			
 		});
 		
 		$http.get('/api/temperatures').success(function(data) {

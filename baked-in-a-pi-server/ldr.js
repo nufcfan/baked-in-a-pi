@@ -3,6 +3,19 @@ var events = require('events');
 
 var isRunning = false;
 var interval = null;
+
+var lightStates = {
+	UNKNOWN : 0,
+	ON: 1
+	OFF: 2
+};
+
+var min, max, cnt = 0;
+var readings = [];
+var readingsMax = 20;
+var loggingTemp = false;
+ 
+var lightState = lightStates.UNKOWN;
  
 wpi.wiringPiSetupGpio();
 
@@ -10,7 +23,7 @@ var ldr = function(config) {
 	this.config = config || {
 		pin: 3,
 		pollingInterval: 1000,
-		lightSwitchThreshold: 150
+		lightSwitchThreshold: 100
 	};
 	events.EventEmitter.call(this);
 };
@@ -18,10 +31,8 @@ var ldr = function(config) {
 ldr.prototype.__proto__ = events.EventEmitter.prototype;
 
 ldr.prototype.readPin = function(pin, callback) { 
-	//console.log('reading pin ' + pin);
-
 	var reading = 0;
-
+	
 	wpi.pinMode(pin, wpi.modes.OUTPUT);		
 	wpi.pullUpDnControl(pin, wpi.PUD_OFF);
 	wpi.digitalWrite(pin, wpi.LOW);
@@ -41,16 +52,37 @@ ldr.prototype.start = function() {
 		isRunning = true;
 		self.emit('started');
 		interval = setInterval(function() {
-			//console.log('calling readPin');
 			self.readPin(self.config.pin, function(reading){ 
-				self.emit('read', reading);
-				if(reading > self.config.lightSwitchThreshold) {
-					// TODO: state change events
-				} else 
-				if(reading < self.config.lightSwitchThreshold) {
-					// TODO: state change events
-				}
-			}); 			
+				if(!loggingTemp && cnt > 0) {
+						min = min < reading ? min : reading;
+						max = max > reading ? max : reading;
+						readings.push(reading);
+						if(readings.length > readingsMax) {
+							readings.shift();
+						}
+
+						var r = Math.round(readings.reduce(function(sum, a) { return sum + a }, 0) / (readings.length != 0 ? readings.length : 1) / 2);
+						console.log('ldr: ' + r + ' buffer: (' + readings.length + '/' + readingsMax + ')');
+						
+						self.emit('read', reading);
+						
+						if(reading > self.config.lightSwitchThreshold) {
+							if(lightState == lightStates.UNKOWN || lightState == lightStates.ON) {
+								lightState = lightStates.OFF;
+								self.emit('lights-off');						
+							}
+						} else 
+						if(reading < self.config.lightSwitchThreshold) {
+							if(lightState == lightStates.UNKOWN || lightState == lightStates.OFF) {
+								lightState = lightStates.ON;
+								self.emit('lights-on');						
+							}
+						}
+					}); 
+					} else {
+						console.log('skipping ldr reading');
+					}
+					cnt++;						
 		}, this.config.pollingInterval);	
 	}
 };
