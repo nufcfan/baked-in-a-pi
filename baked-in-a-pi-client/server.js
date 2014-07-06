@@ -14,6 +14,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
+app.use(express.static(__dirname + '/build'));
+
+app.get('/', function(req, res) {
+	console.log('serving index.html');
+	res.sendfile(__dirname + '/build/index.html');
+});
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -39,13 +46,6 @@ var ds180b20Schema = new Schema({
 app.get('/api/temperatures', function(req, res){
 	console.log('GET: api/temperatures');	
 	
-	/* mongoose.connection.db.collection('DS180B20Sensor', function (err, collection) {
-		collection.find().toArray(function(err, results) {
-			console.log("ERR: " + err);
-			console.log('COLL_FIND: ' + JSON.stringify(results));
-		});
-	}); */
-
 	var T = mongoose.model('DS180B20Sensor', ds180b20Schema);
 	
 	T.count(function (err, count) {
@@ -108,21 +108,6 @@ app.get('/api/temperatures', function(req, res){
 			});
 		});
 	});
-});
-
-app.get('/assets/baked-in-a-pi-client-0.0.3.js', function(req, res) {
-	console.log('serving baked-in-a-pi-client-0.0.3.js');
-	res.sendfile(__dirname + '/assets/baked-in-a-pi-client-0.0.3.js'); 
-});
-
-app.get('/assets/baked-in-a-pi-client-0.0.3.css', function(req, res) {
-	console.log('serving baked-in-a-pi-client-0.0.3.csss');
-	res.sendfile(__dirname + '/assets/baked-in-a-pi-client-0.0.3.css');
-});
-
-app.get('*', function(req, res) {
-	console.log('serving index.html');
-	res.sendfile(__dirname + '/index.html');
 });
 
 app.listen(3000);

@@ -71,16 +71,16 @@ angular.module('baked-in-a-pi.home', [
 			console.log(JSON.stringify(data));
 
 			$scope.celcius_now = $scope.sensor + " : " + sensor.value;
-			if($scope.celcius && $scope.celcius > 0) {
-				$scope.data.push({x: new Date() , temp: $scope.celcius });
+			if(sensor.value && sensor.value > 0) {
+				$scope.data.push({x: new Date() , temp: sensor.value });
 			}
 		});
 		
 		$http.get('/api/temperatures').success(function(data) {
-			debugger;
 			console.log('successful response from temperatures api');
 			console.log(JSON.stringify(data));
-			$scope.data2 = data.map(function(currentValue, index, array) {
+			$scope.data2 = data.map(function(currentValue) {
+				console.log(JSON.stringify(currentValue));
 				return { x : new Date(currentValue.x), temp: currentValue.temp };
 			});
 		});	
