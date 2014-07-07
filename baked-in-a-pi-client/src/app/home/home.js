@@ -34,6 +34,7 @@ angular.module('baked-in-a-pi.home', [
  */
 .controller('HomeCtrl', ['$scope', 'socket', '$http', 
 	function HomeController($scope, socket, $http) {    
+		$scope.log = [];
 		$scope.sensor = "Canopy";
 		$scope.data = [];
 		$scope.options = {
@@ -83,7 +84,7 @@ angular.module('baked-in-a-pi.home', [
 			console.log(lastTemp);
 			console.log(JSON.stringify(data));
 
-			$scope.celcius_now = $scope.sensor + " : T> " + lastTemp + " L> " + lastLight;
+			$scope.celcius_now = $scope.sensor + " : Temperature " + lastTemp + " Light level " + lastLight;
 			
 			if(lastTemp && lastTemp > 0) {
 				$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight });
@@ -92,6 +93,20 @@ angular.module('baked-in-a-pi.home', [
 		
 		socket.on('light-level', function(reading) {	
 			lastLight = reading;
+			$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight });
+			console.log('ldr: ' + reading);			
+		});
+		
+		socket.on('lights-on', function(reading) {	
+			var now = moment();
+			$scope.log.push(now.format("HH:mm:ss") + ": Lights switched on");
+			$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight });
+			console.log('ldr: ' + reading);			
+		});
+		
+		socket.on('lights-off', function(reading) {	
+			var now = moment();
+			$scope.log.push(now.format("HH:mm:ss") + ": Lights switched off");
 			$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight });
 			console.log('ldr: ' + reading);			
 		});

@@ -33,12 +33,16 @@ var readings = [];
 var readingsMax = 20;
 var loggingTemp = false;
 
-var lightClients = 0;
-
 ldrSensor.on('read', function(reading){
-	if(lightClients > 0) {
-		clients.emit('light-level', reading);
-	}
+	clients.emit('light-level', reading);
+});
+
+ldrSensor.on('lights-on', function(reading){
+	clients.emit('lights-on', reading);
+});
+
+ldrSensor.on('lights-off', function(reading){
+	clients.emit('lights-off', reading);
 });
 
 ldrSensor.start();
