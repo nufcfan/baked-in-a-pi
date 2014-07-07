@@ -66,13 +66,13 @@ ldr.prototype.start = function() {
 						
 					self.emit('read', r);
 						
-					if(reading > self.config.lightSwitchThreshold) {
+					if(r > self.config.lightSwitchThreshold) {
 						if(lightState == lightStates.UNKOWN || lightState == lightStates.ON) {
 							lightState = lightStates.OFF;
 							self.emit('lights-off');						
 						}
 					} else 
-					if(reading < self.config.lightSwitchThreshold) {
+					if(r < self.config.lightSwitchThreshold) {
 						if(lightState == lightStates.UNKOWN || lightState == lightStates.OFF) {
 							lightState = lightStates.ON;
 							self.emit('lights-on');						
