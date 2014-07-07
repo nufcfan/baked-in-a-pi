@@ -38,16 +38,24 @@ angular.module('baked-in-a-pi.home', [
 		$scope.data = [];
 		$scope.options = {
 			axes: {
-				x: {key: "x", labelFunction: function (v) { 
+				x: { key: "x", labelFunction: function (v) { 
 						return moment(v).format("HH:mm");					
 					}},
-				y: {min: 18, max: 33}
+				y: { min: 20, max: 30 }, 
+				y2: { min: 70, max: 95 }
 			},
 			series: [{
 				y: "temp",
-				label: "Canopy",
+				label: "Canopy temp",
 				color: "#d62728",
 				axis: "y",
+				type: "line",
+				thickness: "1px"
+			}, {
+				y: "light",
+				label: "Canopy light",
+				color: "#d627ff",
+				axis: "y2",
 				type: "line",
 				thickness: "1px"
 			}],
@@ -58,6 +66,8 @@ angular.module('baked-in-a-pi.home', [
 			drawDots: true
 		};
 		
+		var lastTemp, lastLight = 0;
+				
 		socket.on('temperature', function(data) {
 			var sensor = { };
 			for(var key in data){
@@ -68,16 +78,21 @@ angular.module('baked-in-a-pi.home', [
 				}
 			}	
 			
-			console.log(sensor.value);
+			lastTemp = sensor.value;
+			
+			console.log(lastTemp);
 			console.log(JSON.stringify(data));
 
-			$scope.celcius_now = $scope.sensor + " : " + sensor.value;
-			if(sensor.value && sensor.value > 0) {
-				$scope.data.push({x: new Date() , temp: sensor.value });
+			$scope.celcius_now = $scope.sensor + " : T> " + lastTemp + " L> " + lastLight;
+			
+			if(lastTemp && lastTemp > 0) {
+				$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight });
 			}
 		});
 		
-		socket.on('light-level', function(reading) {			
+		socket.on('light-level', function(reading) {	
+			lastLight = reading;
+			$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight });
 			console.log('ldr: ' + reading);			
 		});
 		
