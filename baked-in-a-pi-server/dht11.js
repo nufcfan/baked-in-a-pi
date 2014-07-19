@@ -4,8 +4,8 @@ var events = require('events');
 var isRunning = false;
 var interval = null;
 
-var min, max, cnt = 0;
-var readings = [];
+var cnt = 0;
+var temperatures, humidities = [];
 var readingsMax = 20;
 var loggingTemp = false;
 
@@ -37,17 +37,25 @@ dht11.prototype.start = function() {
 		interval = setInterval(function() {
 			self.readPin(self.config.pin, function(reading){ 
 				if(!loggingTemp && cnt > 0) {
-					min = min < reading ? min : reading;
-					max = max > reading ? max : reading;
-					readings.push(reading);
-					if(readings.length > readingsMax) {
-						readings.shift();
-					}
-
-					var t = Math.round(readings.reduce(function(sum, a) { return sum + a.temperature.toFixed(2) }, 0) / (readings.length != 0 ? readings.length : 1) / 2);
-					var h = Math.round(readings.reduce(function(sum, a) { return sum + a.hunidity.toFixed(2) }, 0) / (readings.length != 0 ? readings.length : 1) / 2);
 					
-					console.log('dht11: t: ' + t  + ' h: ' + h + ' buffer: (' + readings.length + '/' + readingsMax + ')');
+					temperatures.push(reading.temperature.toFixed(2));
+					
+					if(temperatures.length > readingsMax) {
+						temperatures.shift();
+					}
+					
+					humidities.push(reading.humidity.toFixed(2));
+					
+					if(humidities.length > readingsMax) {
+						humidities.shift();
+					}
+					
+					console.log("dht: " + JSON.stringify(reading));
+
+					var t = Math.round(temperatures.reduce(function(sum, a) { return sum + a }, 0) / (temperatures.length != 0 ? temperatures.length : 1) / 2);
+					var h = Math.round(humidities.reduce(function(sum, a) { return sum + a }, 0) / (humidities.length != 0 ? humidities.length : 1) / 2);
+					
+					console.log('dht11: t: ' + t  + ' h: ' + h + ' buffer: (' + humidities.length + '/' + readingsMax + ')');
 											
 					self.emit('read', { t: t, h: h });
 										
