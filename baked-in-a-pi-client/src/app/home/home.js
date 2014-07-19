@@ -83,7 +83,7 @@ angular.module('baked-in-a-pi.home', [
 		
 		var lastTemp, lastLight, lastTemp2, lastHumidity = 0;
 				
-		function RefreshData() {		
+		var refreshData = function() {		
 			$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight, temp2: lastTemp2, humidity: lastHumidity });
 		};		
 				
@@ -112,27 +112,27 @@ angular.module('baked-in-a-pi.home', [
 		socket.on('dht11-read', function(reading) {	
 			lastHumidity = reading.h;
 			lastTemp2 = reading.t;
-			RefreshData();
+			refreshData();
 			console.log('dht11: ' + JSON.stringify(reading));			
 		});
 		
 		socket.on('light-level', function(reading) {	
 			lastLight = reading;
-			RefreshData();
+			refreshData();
 			console.log('ldr: ' + reading);			
 		});
 		
 		socket.on('lights-on', function(reading) {	
 			var now = moment();
 			$scope.log.push(now.format("HH:mm") + ": Lights switched on");
-			RefreshData();
+			refreshData();
 			console.log('ldr: ' + reading);			
 		});
 		
 		socket.on('lights-off', function(reading) {	
 			var now = moment();
 			$scope.log.push(now.format("HH:mm") + ": Lights switched off");
-			RefreshData();
+			refreshData();
 			console.log('ldr: ' + reading);			
 		});
 		
