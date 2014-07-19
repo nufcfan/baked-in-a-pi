@@ -43,7 +43,7 @@ dht11.prototype.start = function() {
 					var t1 = reading.temperature.toFixed(2);
 					var h1 = reading.humidity.toFixed(2);
 					
-					if((!isNaN(t1) && (t1 > 0 && t1 < 99) && (!isNaN(h1) && (h1 > 0 && h1 < 99)) {
+					if((!isNaN(t1) && (t1 > 0 && t1 < 99)) && (!isNaN(h1) && (h1 > 0 && h1 < 99))) {
 						temperatures.push(t1);
 					
 						if(temperatures.length > readingsMax) {
