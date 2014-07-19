@@ -2,6 +2,7 @@
 var dbConfig = require('./.pwd').db;
 var ds18b20 = require('ds18x20');
 var ldr = require('./ldr.js');
+var dht11 = require('./dht11.js');
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -46,6 +47,22 @@ ldrSensor.on('lights-off', function(reading){
 });
 
 ldrSensor.start();
+
+var dht11Sensor = new dht11();
+
+dht11Sensor.on('started', function(reading){
+	console.log('dht11 sensor started');
+});
+
+dht11Sensor.on('stopped', function(reading){
+	console.log('dht11 sensor stopped');
+});
+
+dht11Sensor.on('read', function(reading){
+	clients.emit('dht11-reading', reading);
+});
+
+dht11Sensor.start();
 
 var ds180b20Schema = new Schema({
 	sensorId: String,

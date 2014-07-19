@@ -35,7 +35,7 @@ angular.module('baked-in-a-pi.home', [
 .controller('HomeCtrl', ['$scope', 'socket', '$http', 
 	function HomeController($scope, socket, $http) {    
 		$scope.log = [];
-		$scope.sensor = "Canopy";
+		$scope.sensor = "Flowering Tent";
 		$scope.data = [];
 		$scope.options = {
 			axes: {
@@ -43,13 +43,27 @@ angular.module('baked-in-a-pi.home', [
 						return moment(v).format("HH:mm");					
 					}},
 				y: { min: 20, max: 30 }, 
-				y2: { min: 70, max: 95 }
+				y2: { min: 40, max: 95 }
 			},
 			series: [{
 				y: "temp",
-				label: "Canopy temp",
+				label: "Floor temp",
 				color: "#d62728",
 				axis: "y",
+				type: "line",
+				thickness: "1px"
+			}, {
+				y: "temp2",
+				label: "Canopy temp",
+				color: "#d6ff28",
+				axis: "y",
+				type: "line",
+				thickness: "1px"
+			}, {
+				y: "humidity",
+				label: "Canopy humidity",
+				color: "#d60028",
+				axis: "y2",
 				type: "line",
 				thickness: "1px"
 			}, {
@@ -64,10 +78,14 @@ angular.module('baked-in-a-pi.home', [
 			tension: 0.7,
 			tooltipMode: "scrubber",
 			drawLegend: true,
-			drawDots: true
+			drawDots: false
 		};
 		
-		var lastTemp, lastLight = 0;
+		var lastTemp, lastLight, lastTemp2, lastHumidity = 0;
+				
+		function RefreshData() {		
+			$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight, temp2: lastTemp2, humidity: lastHumidity });
+		};		
 				
 		socket.on('temperature', function(data) {
 			var sensor = { };
@@ -91,23 +109,30 @@ angular.module('baked-in-a-pi.home', [
 			}
 		});
 		
+		socket.on('dht11-read', function(reading) {	
+			lastHumidity = reading.h;
+			lastTemp2 = reading.t;
+			RefreshData();
+			console.log('dht11: ' + JSON.stringify(reading));			
+		});
+		
 		socket.on('light-level', function(reading) {	
 			lastLight = reading;
-			$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight });
+			RefreshData();
 			console.log('ldr: ' + reading);			
 		});
 		
 		socket.on('lights-on', function(reading) {	
 			var now = moment();
-			$scope.log.push(now.format("HH:mm:ss") + ": Lights switched on");
-			$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight });
+			$scope.log.push(now.format("HH:mm") + ": Lights switched on");
+			RefreshData();
 			console.log('ldr: ' + reading);			
 		});
 		
 		socket.on('lights-off', function(reading) {	
 			var now = moment();
-			$scope.log.push(now.format("HH:mm:ss") + ": Lights switched off");
-			$scope.data.push({x: new Date(), temp: lastTemp, light: lastLight });
+			$scope.log.push(now.format("HH:mm") + ": Lights switched off");
+			RefreshData();
 			console.log('ldr: ' + reading);			
 		});
 		

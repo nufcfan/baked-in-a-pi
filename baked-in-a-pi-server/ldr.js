@@ -50,7 +50,7 @@ ldr.prototype.start = function() {
 	var self = this;
   	if(!isRunning) {
 		isRunning = true;
-		self.emit('started');
+		self.emit('ldr started');
 		interval = setInterval(function() {
 			self.readPin(self.config.pin, function(reading){ 
 				if(!loggingTemp && cnt > 0) {
