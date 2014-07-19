@@ -23,7 +23,7 @@ var ldr = function(config) {
 	this.config = config || {
 		pin: 3,
 		pollingInterval: 1000,
-		lightSwitchThreshold: 88
+		lightSwitchThreshold: 82
 	};
 	events.EventEmitter.call(this);
 };

@@ -11,7 +11,8 @@
     "socket.io": "~1.0.6",
     "socket.io-stream": "~0.5.3",
     "ds18x20": "~0.1.1",
-	"mongoose": "~3.8.12",
-	"wiring-pi": "~1.1.1"
-   }
+    "mongoose": "~3.8.12",
+    "wiring-pi": "~1.1.1",
+    "node-dht-sensor": "0.0.2"
+  }
 }
