@@ -15,7 +15,7 @@ var readings = [];
 var readingsMax = 20;
 var loggingTemp = false;
  
-var lightState = lightStates.UNKOWN;
+var lightState = lightStates.UNKNOWN;
  
 wpi.wiringPiSetupGpio();
 
@@ -67,13 +67,13 @@ ldr.prototype.start = function() {
 					self.emit('read', r);
 						
 					if(r > self.config.lightSwitchThreshold) {
-						if(lightState == lightStates.UNKOWN || lightState == lightStates.ON) {
+						if(lightState == lightStates.UNKNOWN || lightState == lightStates.ON) {
 							lightState = lightStates.OFF;
 							self.emit('lights-off');						
 						}
 					} else 
 					if(r < self.config.lightSwitchThreshold) {
-						if(lightState == lightStates.UNKOWN || lightState == lightStates.OFF) {
+						if(lightState == lightStates.UNKNOWN || lightState == lightStates.OFF) {
 							lightState = lightStates.ON;
 							self.emit('lights-on');						
 						}
