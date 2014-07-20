@@ -40,8 +40,8 @@ dht11.prototype.start = function() {
 			self.readPin(self.config.pin, function(reading){ 
 				if(!loggingTemp && cnt > 0) {
 					
-					var t1 = reading.temperature.toFixed(2);
-					var h1 = reading.humidity.toFixed(2);
+					var t1 = reading.temperature.toFixed(0);
+					var h1 = reading.humidity.toFixed(0);
 					
 					if((!isNaN(t1) && (t1 > 0 && t1 < 99)) && (!isNaN(h1) && (h1 > 0 && h1 < 99))) {
 						temperatures.push(t1);
@@ -58,12 +58,13 @@ dht11.prototype.start = function() {
 						
 						console.log("dht: " + JSON.stringify(reading));
 
-						var t = Math.round(temperatures.reduce(function(sum, a) { return sum + a }, 0) / (temperatures.length != 0 ? temperatures.length : 1) / 2);
-						var h = Math.round(humidities.reduce(function(sum, a) { return sum + a }, 0) / (humidities.length != 0 ? humidities.length : 1) / 2);
+						var t = Math.round(temperatures.reduce(function(sum, a) { return sum + a }, 0) / (temperatures.length != 0 ? temperatures.length : 1) /2);
+						var h = Math.round(humidities.reduce(function(sum, a) { return sum + a }, 0) / (humidities.length != 0 ? humidities.length : 1) /2);
 						
-						console.log('dht11: t: ' + t  + ' h: ' + h + ' buffer: (' + humidities.length + '/' + readingsMax + ')');
+console.log("ts: " + JSON.stringify(temperatures));
+						console.log('dht11: t: ' + t1  + ' h: ' + h1 + ' buffer: (' + humidities.length + '/' + readingsMax + ')');
 												
-						self.emit('read', { t: t, h: h });
+						self.emit('read', { t: t1, h: h1 });
 					}
 				} else {
 					console.log('skipping dht11 reading');

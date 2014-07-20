@@ -59,6 +59,7 @@ dht11Sensor.on('stopped', function(reading){
 });
 
 dht11Sensor.on('read', function(reading){
+	console.log("enitting");
 	clients.emit('dht11-reading', reading);
 });
 
